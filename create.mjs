@@ -1,7 +1,8 @@
 import db from './models/index.mjs';
 
-db.Item.create({
+db.User.create({
   name: process.argv[2],
+  price: process.argv[3],
 })
   .then((item) => {
     console.log('success!');

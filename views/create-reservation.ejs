@@ -1,0 +1,17 @@
+<form action="/reservation/<%=id %>/create" method="POST">
+  <div class="form-group">
+    <label for="inputDate">Reservation date</label>
+    <input
+      type="date"
+      class="form-control"
+      id="date"
+      name="date"
+      aria-describedby="dateHelp"
+      placeholder="Enter date"
+    />
+    <small id="dateHelp" class="form-text text-muted"
+      >We'll help you reserve <%= name %> for this date!</small
+    >
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

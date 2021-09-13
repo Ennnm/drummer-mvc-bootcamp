@@ -19,23 +19,36 @@ export default function initReservationsController(db) {
   // render ejs
   const createForm = (req, res) => {
     const drummerId = req.params.drummer_id;
-    const obj = {};
-    res.render('create-reservation', { drummerId });
+
+    db.User.findOne({
+      where: {
+        id: drummerId,
+      },
+    })
+      .then((items) => {
+        res.render('create-reservation', items.dataValues);
+      })
+      .catch((err) => console.log(err));
   };
   const create = async (req, res) => {
     const drummerId = req.params.drummer_id;
     const { date } = req.body;
-
-    const reservation = await QueryInterface.bulkInsert(
-      'reservations',
-      [{
-        reservation_date: date,
-        drummer_id: drummerId,
-        created_at: new Date(),
-        updated_at: new Date(),
-      }],
-      { returning: true },
-    );
+    const newReservation = await db.Reservation.create({
+      reservationDate: date,
+      userId: drummerId,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+    // const reservation = await queryInterface.bulkInsert(
+    //   'reservations',
+    //   [{
+    //     reservation_date: date,
+    //     drummer_id: drummerId,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   }],
+    //   { returning: true },
+    // );
 
     res.redirect(`/reservations/${drummerId}`);
     //     const users = await queryInterface.bulkInsert(
